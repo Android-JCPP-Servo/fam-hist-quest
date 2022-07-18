@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #FFF !important;
+}
+
+.centered {
+    margin: 0 auto !important;
+}
+
+.response {
+    background-color: #99CCFF !important;
+}
+
+h1 {
+    text-align: center;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+@media screen and (min-width: 768px) {
+    #historyForm {
+        width: 50% !important;
+    }    
+}
