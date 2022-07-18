@@ -104,8 +104,6 @@
         <button type="button" class="btn btn-primary mb-5 ms-3 me-3" id="submitData"><img src="assets/heart_tree.jpg" class="logo rounded">&emsp;Submit</button>
     </form>
 
-    <button id="test">Click me!</button>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
         // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-analytics.js";
@@ -127,56 +125,69 @@
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-
-        /**
-         * DATA SECTION
-         */
-        let name = document.getElementById("name");
-        let toys = document.getElementById("toys");
-        let slang = document.getElementById("slang");
-        let dinner = document.getElementById("dinner");
-        let halloween = document.getElementById("halloween");
-        let adjectives = document.getElementById("adjectives");
-        let teaching = document.getElementById("teaching");
-        let advice = document.getElementById("advice");
-        let event = document.getElementById("event");
-        let cousins = document.getElementById("cousins");
-        let elementary = document.getElementById("elementary");
-        let candy = document.getElementById("candy");
-        let vacation = document.getElementById("vacation");
-        let favClass = document.getElementById("class");
-        let smell = document.getElementById("smell");
-        let scripture = document.getElementById("scripture");
-
-        // let test = document.getElementById("test");
-        // test.addEventListener("click", function() {
-        //     const form = document.getElementById("historyForm")
-        //     const formData = new FormData(form);
-        //     console.log(formData)
-        // })
+        
+        function makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * 
+            charactersLength));
+            }
+            return result;
+        }
         
         let submitData = document.getElementById('submitData');
         submitData.addEventListener('click', async function() {
+            // Randomize document ID
+            // let docId = makeid(5);
+            
+            /**
+             * DATA SECTION
+             */
+            let name = document.getElementById("name").value;
+            let toys = document.getElementById("toys").value;
+            let slang = document.getElementById("slang").value;
+            let dinner = document.getElementById("dinner").value;
+            let halloween = document.getElementById("halloween").value;
+            let adjectives = document.getElementById("adjectives").value;
+            let teaching = document.getElementById("teaching").value;
+            let advice = document.getElementById("advice").value;
+            let event = document.getElementById("event").value;
+            let cousins = document.getElementById("cousins").value;
+            let elementary = document.getElementById("elementary").value;
+            let candy = document.getElementById("candy").value;
+            let vacation = document.getElementById("vacation").value;
+            let favClass = document.getElementById("class").value;
+            let smell = document.getElementById("smell").value;
+            let scripture = document.getElementById("scripture").value;
+
+            // Pass data to Firestore
             const db = getFirestore(app);
-            const answersCol = collection(db, 'quest_answers')
-            const answersSnapshot = await setDoc(doc(db, 'quest_answers', name), {
-                "What is your full name?": name,
-                "Describe some toys you had as a child. Which was your favorite?": toys,
-                "What were some slang words that were popular when you were a teen? What did they mean?": slang,
-                "What were some thing your mom or dad would make for dinner that you loved to eat? Do you have the recipes for these dishes?": dinner,
-                "Did you go Trick-or-Treating for Halloween when you were young? If so, what was your favorite costume? What did you use to make the costume?": halloween,
-                "Please list three adjectives that describes your sibling when they were younger.": adjectives,
-                "What is one thing you learned from an aunt or uncle? (A skill, life lesson, a recipe, an insight etc.) Name the relative and describe how the teaching impacted your life?": teaching,
-                "What is one helpful piece of advice your parents gave you?": advice,
-                "What is one big, newsworthy world event that happened during your high school years? What impact did the event have on you? (For example, how did it make you feel, think, etc.)": event,
-                "Describe a favorite memory with your cousins. (Please include their names, if possible.)": counsins,
-                "During elementary school years, what did you do after school on most days?": elementary,
-                "Did you have a favorite candy growing up? If so, what was it and how much did it cost?": candy,
-                "In your childhood, where would your family go for vacation? What did you enjoy doing there?": vacation,
-                "What was your favorite class at school? Why did you enjoy the class?": favClass,
-                "What was a favorite smell from your childhood? (For example, cookies at Christmas, a store, etc.)": smell,
-                "If you could write a verse of scripture or poem of hope to the world, what would it say?": scripture
-            }).then(console.log('Successfully written'));
+            const answersCol = collection(db, 'quest_answers');
+            if (name != "" && toys != "" && slang != "" && dinner != "" && halloween != "" && adjectives != "" && teaching != "" && advice != "" && event != "" && cousins != "" && elementary != "" && candy != "" && vacation != "" && favClass != "" && smell != "" && scripture != "") {
+                const answersSnapshot = await setDoc(doc(db, 'quest_answers', name), {
+                    fullName: name,
+                    favoriteToys: toys,
+                    slangWords: slang,
+                    favoriteDinner: dinner,
+                    halloweenCustome: halloween,
+                    siblingAdjectives: adjectives,
+                    auntUncleTeachings: teaching,
+                    parentalAdvice: advice,
+                    newsworthyEvent: event,
+                    cousinMemory: cousins,
+                    afterSchool: elementary,
+                    favoriteCandy: candy,
+                    childhoodVacation: vacation,
+                    favoriteClass: favClass,
+                    favoriteSmell: smell,
+                    hopefulScripture: scripture
+                }).then(console.log('Successfully written'))
+                .then(alert('Data saved successfully!'));
+            } else {
+                alert('Some form data is missing. Please make sure to enter all data before submitting.');
+            }
         });
     </script>
 </body>
