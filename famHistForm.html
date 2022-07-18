@@ -109,7 +109,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
         // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-analytics.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -135,10 +135,13 @@
         let submitData = document.getElementById('submitData');
         submitData.addEventListener('click', async function() {
             const db = getFirestore(app);
-            const answersCol = collection(db, 'quest_answers');
-            const answersSnapshot = await getDocs(answersCol);
-            const answersList = answersSnapshot.docs.map(doc => doc.data());
-            console.log('Got answers', answersList);
+            const answersCol = collection(db, 'quest_answers')
+            const answersSnapshot = await setDoc(doc(db, 'quest_answers', '12345'), {
+                first: "Andersen",
+                last: "S"
+            }).then(console.log('Successfully written'));
+            // const answersList = answersSnapshot.docs.map(doc => doc.data());
+            // console.log('Got answers', answersList);
         })
 
         // let test = document.getElementById('test')
