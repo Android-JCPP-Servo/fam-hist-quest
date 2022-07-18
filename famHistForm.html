@@ -136,9 +136,9 @@
         submitData.addEventListener('click', async function() {
             const db = getFirestore(app);
             const answersCol = collection(db, 'quest_answers')
-            const answersSnapshot = await setDoc(doc(db, 'quest_answers', '12345'), {
-                first: "Andersen",
-                last: "S"
+            const answersSnapshot = await setDoc(doc(db, 'quest_answers', '678910'), {
+                first: "Warner",
+                last: "V"
             }).then(console.log('Successfully written'));
             // const answersList = answersSnapshot.docs.map(doc => doc.data());
             // console.log('Got answers', answersList);
