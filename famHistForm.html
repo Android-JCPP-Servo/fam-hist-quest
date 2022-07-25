@@ -11,8 +11,15 @@
 </head>
 <body>
     
-    <form class="centered w-100 shadow rounded mb-5" id="historyForm">
-        <h1 class="mt-5 mb-5 ms-3 me-3">Life History Questionnaire</h1>
+    <form class="centered w-100 shadow rounded mb-5 mt-5" id="historyForm">
+        <div class="row">
+            <div class="col-md-2">
+                <a href="/" class="btn btn-secondary mt-5 mb-5 ms-3 me-3">Home</a>
+            </div>
+            <div class="col-md-8">
+                <h1 class="mt-5 mb-5 ms-3 me-3">Life History Questionnaire</h1>
+            </div>
+        </div>
         
         <h4 class="m-3"><strong>Instructions:</strong></h4>
         <p class="m-3">
@@ -104,6 +111,10 @@
         <button type="button" class="btn btn-primary mb-5 ms-3 me-3" id="submitData"><img src="assets/heart_tree.jpg" class="logo rounded">&emsp;Submit</button>
     </form>
 
+    <footer class="centered w-100 mb-5 text-center">
+        &copy; Copyright <script>document.write(/\d{4}/.exec(Date())[0])</script>&emsp;|&emsp;Family History Questionnaire&emsp;|&emsp;Designed using Bootstrap
+    </footer>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
         // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-analytics.js";
@@ -140,7 +151,7 @@
         let submitData = document.getElementById('submitData');
         submitData.addEventListener('click', async function() {
             // Randomize document ID
-            // let docId = makeid(5);
+            let docId = makeid(5);
             
             /**
              * DATA SECTION
@@ -166,7 +177,7 @@
             const db = getFirestore(app);
             const answersCol = collection(db, 'quest_answers');
             if (name != "" && toys != "" && slang != "" && dinner != "" && halloween != "" && adjectives != "" && teaching != "" && advice != "" && event != "" && cousins != "" && elementary != "" && candy != "" && vacation != "" && favClass != "" && smell != "" && scripture != "") {
-                const answersSnapshot = await setDoc(doc(db, 'quest_answers', name), {
+                const answersSnapshot = await setDoc(doc(db, 'quest_answers', name + "-" + docId), {
                     fullName: name,
                     favoriteToys: toys,
                     slangWords: slang,
